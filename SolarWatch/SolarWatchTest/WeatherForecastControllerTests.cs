@@ -50,4 +50,28 @@ public class WeatherForecastControllerTests
     
         Assert.IsInstanceOf<OkObjectResult>(result.Result);
     }
+    
+    [Test]
+    public async Task GetCurrentReturnsOkResultIfWeatherDataIsValid()
+    {
+        // Arrange
+        var expectedForecast = new WeatherForecast();
+        var weatherDataProviderMock = new Mock<IWeatherDataProvider>();
+        var geocodingServiceMock = new Mock<IGeocodingService>();
+        var loggerMock = new Mock<ILogger<WeatherForecastController>>();
+        var jsonProcessorMock = new Mock<IJsonProcessor>();
+        var sunriseSunsetServiceMock = Mock.Of<ISunriseSunsetService>();
+        geocodingServiceMock.Setup(x => x.GetCoordinatesForCityAsync(It.IsAny<string>())).ReturnsAsync((47.497913, 19.040236));
+        var weatherData = "{}";
+        weatherDataProviderMock.Setup(x => x.GetCurrentAsync(It.IsAny<double>(), It.IsAny<double>()))
+            .ReturnsAsync(weatherData);
+        jsonProcessorMock.Setup(x => x.Process(weatherData)).Returns(expectedForecast);
+        var controller = new WeatherForecastController(loggerMock.Object, weatherDataProviderMock.Object, jsonProcessorMock.Object,geocodingServiceMock.Object ,sunriseSunsetServiceMock);
+        // Act
+        var result = await controller.GetCurrent();
+
+        // Assert
+        Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+        Assert.That(((OkObjectResult)result.Result).Value, Is.EqualTo(expectedForecast));
+    }
 }

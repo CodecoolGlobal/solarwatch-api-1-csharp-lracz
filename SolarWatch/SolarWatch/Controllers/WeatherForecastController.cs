@@ -51,32 +51,59 @@ public class WeatherForecastController : ControllerBase
 
         return Ok(forecasts);
     }
+   
+    // [HttpGet("Get")]
+    // public async Task<ActionResult<WeatherForecast>> Get(DateTime date, [Required]string city)
+    // {
+    //
+    //     var (lat, lon) = await _geocodingService.GetCoordinatesForCityAsync(city);
+    //     try
+    //     {
+    //         var weatherData = _weatherDataProvider.GetCurrent(lat, lon);
+    //         return Ok(_jsonProcessor.Process(weatherData));
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         _logger.LogError(e, "Error getting weather data");
+    //         return NotFound("Error getting weather data");
+    //     }
+    // }
     [HttpGet("Get")]
-    public async Task<ActionResult<WeatherForecast>> Get(DateTime date, [Required]string city)
+    public IEnumerable<WeatherForecast> Get()
     {
-  
-        var (lat, lon) = await _geocodingService.GetCoordinatesForCityAsync(city);
-        try
-        {
-            var weatherData = _weatherDataProvider.GetCurrent(lat, lon);
-            return Ok(_jsonProcessor.Process(weatherData));
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error getting weather data");
-            return NotFound("Error getting weather data");
-        }
+        _logger.LogInformation("Long running process started");
+        Thread.Sleep(60000);
+        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)],
+            })
+            .ToArray();
+    }
+    [HttpGet("GetAsync")]
+    public async Task<IEnumerable<WeatherForecast>> GetAsync()
+    {
+        _logger.LogInformation("Long running process started");
+        await Task.Delay(60000);
+        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)],
+            })
+            .ToArray();
     }
    
     [HttpGet("GetCurrent")]
-    public ActionResult<WeatherForecast> GetCurrent()
+    public async Task<ActionResult<WeatherForecast>> GetCurrent()
     {
         var lat = 47.497913;
         var lon = 19.040236;
 
         try
         {
-            var weatherData = _weatherDataProvider.GetCurrent(lat, lon);
+            var weatherData = await _weatherDataProvider.GetCurrentAsync(lat, lon);
             return Ok(_jsonProcessor.Process(weatherData));
         }
         catch (Exception e)
