@@ -72,7 +72,6 @@ public class WeatherForecastController : ControllerBase
     public IEnumerable<WeatherForecast> Get()
     {
         _logger.LogInformation("Long running process started");
-        Thread.Sleep(60000);
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
