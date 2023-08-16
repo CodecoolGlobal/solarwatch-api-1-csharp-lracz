@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using SolarWatch;
+using SolarWatch.Context;
+using SolarWatch.Model;
 using WeatherApi.Services;
 
 namespace WeatherApi.Controllers;
@@ -23,14 +25,19 @@ public class WeatherForecastController : ControllerBase
     private readonly IJsonProcessor _jsonProcessor;
      private readonly ISunriseSunsetService _sunriseSunsetService;
      private readonly IGeocodingService _geocodingService;
+     private readonly ICityRepository _cityRepository;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherDataProvider weatherDataProvider, IJsonProcessor jsonProcessor,IGeocodingService geocodingService,ISunriseSunsetService sunriseSunsetService)
+     public WeatherForecastController(ILogger<WeatherForecastController> logger, 
+        IWeatherDataProvider weatherDataProvider, IJsonProcessor jsonProcessor,
+        IGeocodingService geocodingService,ISunriseSunsetService sunriseSunsetService,
+        ICityRepository cityRepository)
     {
         _logger = logger;
         _weatherDataProvider = weatherDataProvider;
         _jsonProcessor = jsonProcessor;
          _sunriseSunsetService = sunriseSunsetService;
          _geocodingService = geocodingService;
+         _cityRepository = cityRepository;
     }
 
     [HttpGet("GetWeatherForecast")]
@@ -94,24 +101,24 @@ public class WeatherForecastController : ControllerBase
             .ToArray();
     }
    
-    [HttpGet("GetCurrent")]
-    public async Task<ActionResult<WeatherForecast>> GetCurrent()
-    {
-        var lat = 47.497913;
-        var lon = 19.040236;
-
-        try
-        {
-            var weatherData = await _weatherDataProvider.GetCurrentAsync(lat, lon);
-            return Ok(_jsonProcessor.Process(weatherData));
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error getting weather data");
-            return NotFound("Error getting weather data");
-        }
-    }
-    
+    // [HttpGet("GetCurrent")]
+    // public async Task<ActionResult<WeatherForecast>> GetCurrent()
+    // {
+    //     var lat = 47.497913;
+    //     var lon = 19.040236;
+    //
+    //     try
+    //     {
+    //         var weatherData = await _weatherDataProvider.GetCurrentAsync(lat, lon);
+    //         return Ok(_jsonProcessor.Process(weatherData));
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         _logger.LogError(e, "Error getting weather data");
+    //         return NotFound("Error getting weather data");
+    //     }
+    // }
+    //
  
     [HttpGet("sunrise-sunset")]
     public async Task<ActionResult> GetSunriseSunset(string city, DateTime date)
@@ -131,6 +138,26 @@ public class WeatherForecastController : ControllerBase
 
             _logger.LogError(ex, "Error getting weather data");
             return StatusCode(500, "An unexpected error occurred");
+        }
+    }
+    [HttpGet("GetCurrent")]
+    public async Task<ActionResult<WeatherForecast>> GetCurrent(string cityName)
+    {
+        var city = _cityRepository.GetByName(cityName);
+        if (city == null)
+        {
+            return NotFound($"City {cityName} not found");
+        }
+
+        try
+        {
+            var weatherData = await _weatherDataProvider.GetCurrentAsync(city.Longitude, city.Latitude);
+            return Ok(_jsonProcessor.Process(weatherData));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error getting weather data");
+            return NotFound("Error getting weather data");
         }
     }
 
