@@ -6,7 +6,13 @@ namespace SolarWatch.Context;
 public class WeatherApiContext : DbContext
 {
     public DbSet<City> Cities { get; set; }
+    public DbSet<SunriseSunset> SunriseSunsets { get; set; }
 
+
+    public WeatherApiContext(DbContextOptions<WeatherApiContext> options)
+        : base(options)
+    {
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(

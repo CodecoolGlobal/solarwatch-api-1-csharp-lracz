@@ -3,9 +3,9 @@
 public interface ICityRepository
 {
     IEnumerable<City> GetAll();
-    City? GetByName(string name);
+    public Task<City?> GetByNameAsync(string name);
+    public Task AddAsync(City city);
 
-    void Add(City city);
-    void Delete(City city);
-    void Update(City city);
+    public Task DeleteAsync(City city);
+    public Task UpdateAsync(City city);
 }

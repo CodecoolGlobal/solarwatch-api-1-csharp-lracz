@@ -20,8 +20,7 @@ namespace WeatherApi.Services
                 var client = new WebClient();
                 var data = client.DownloadString(url);
                 JsonDocument json = JsonDocument.Parse(data);
-
-                // Extract sunrise and sunset times from the JSON response
+                
                 string sunriseTimeString = json.RootElement.GetProperty("results").GetProperty("sunrise").GetString();
                 string sunsetTimeString = json.RootElement.GetProperty("results").GetProperty("sunset").GetString();
 
@@ -32,9 +31,7 @@ namespace WeatherApi.Services
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that occurred during the API call
-                // For example, log the error or throw a custom exception
-                // You can define a custom exception class to wrap the exception for more meaningful error handling
+              
                 throw new Exception("Error while fetching sunrise/sunset data from the API.", ex);
             }
         }

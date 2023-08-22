@@ -1,39 +1,41 @@
-﻿using SolarWatch.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using SolarWatch.Context;
 
 namespace SolarWatch.Model;
 
 public class CityRepository : ICityRepository
 {
+    private readonly WeatherApiContext _dbContext;
+
+    public CityRepository(WeatherApiContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
     public IEnumerable<City> GetAll()
     {
-        using var dbContext = new WeatherApiContext();
-        return dbContext.Cities.ToList();
+        return _dbContext.Cities.ToList();
     }
 
-    public City? GetByName(string name)
+    public async Task<City?> GetByNameAsync(string name)
     {
-        using var dbContext = new WeatherApiContext();
-        return dbContext.Cities.FirstOrDefault(c => c.Name == name);
+        return await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == name);
     }
 
-    public void Add(City city)
+    public async Task AddAsync(City city)
     {
-        using var dbContext = new WeatherApiContext();
-        dbContext.Add(city);
-        dbContext.SaveChanges();
+        _dbContext.Add(city);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public void Delete(City city)
+    public async Task DeleteAsync(City city)
     {
-        using var dbContext = new WeatherApiContext();
-        dbContext.Remove(city);
-        dbContext.SaveChanges();
+        _dbContext.Remove(city);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public void Update(City city)
+    public async Task UpdateAsync(City city)
     {  
-        using var dbContext = new WeatherApiContext();
-        dbContext.Update(city);
-        dbContext.SaveChanges();
+        _dbContext.Update(city);
+        await _dbContext.SaveChangesAsync();
     }
 }

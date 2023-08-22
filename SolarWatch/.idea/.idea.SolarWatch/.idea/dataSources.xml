@@ -9,5 +9,13 @@
       <jdbc-url>Server=localhost,1433;Database=WeatherApi;User Id=sa;Password=yourStrong(!)Password;</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@localhost" uuid="ec59c92d-b129-40f3-97cc-4e48505f1af4">
+      <driver-ref>sqlserver.jb</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
+      <jdbc-url>Server=localhost,1433; Database=AppDatabase; User Id=sa; Password=yourStrong(!)Password; Integrated Security=False; Encrypt=False;</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
