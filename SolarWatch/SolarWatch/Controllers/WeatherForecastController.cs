@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using SolarWatch;
 using SolarWatch.Context;
@@ -45,7 +46,7 @@ public class WeatherForecastController : ControllerBase
         _sunriseSunsetRepository = sunriseSunsetRepository;
     }
 
-    [HttpGet("GetWeatherForecast")]
+    [HttpGet("GetWeatherForecast"),Authorize(Roles="Admin")]
     public ActionResult<IEnumerable<WeatherForecast>> Get(DateTime date)
     {
         if (date.Year < 2023)
@@ -166,7 +167,7 @@ public class WeatherForecastController : ControllerBase
     //         return NotFound("Error getting weather data");
     //     }
     // }
-    [HttpGet("GetCurrent")]
+    [HttpGet("GetCurrent"),Authorize(Roles="User, Admin")]
     public async Task<ActionResult<WeatherForecast>> GetCurrent(string cityName)
     {
         var city = await _cityRepository.GetByNameAsync(cityName);
