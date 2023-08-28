@@ -1,10 +1,12 @@
-﻿namespace SolarWatch.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SolarWatch.Model;
 
 public class City
 {
-    public int Id { get; init; }
-    public string Name { get; init; }
-    public double Latitude { get; init; }
-    public double Longitude { get; init; }
-    public IEnumerable<SunriseSunset>? SunriseSunsets { get; set; }
+    [Key] 
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
 }

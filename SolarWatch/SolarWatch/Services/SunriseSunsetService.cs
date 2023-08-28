@@ -21,8 +21,8 @@ namespace WeatherApi.Services
                 var data = client.DownloadString(url);
                 JsonDocument json = JsonDocument.Parse(data);
                 
-                string sunriseTimeString = json.RootElement.GetProperty("results").GetProperty("sunrise").GetString();
-                string sunsetTimeString = json.RootElement.GetProperty("results").GetProperty("sunset").GetString();
+                string? sunriseTimeString = json.RootElement.GetProperty("results").GetProperty("sunrise").GetString();
+                string? sunsetTimeString = json.RootElement.GetProperty("results").GetProperty("sunset").GetString();
 
                 TimeSpan sunriseTime = DateTime.Parse(sunriseTimeString).TimeOfDay;
                 TimeSpan sunsetTime = DateTime.Parse(sunsetTimeString).TimeOfDay;

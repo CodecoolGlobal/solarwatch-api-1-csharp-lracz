@@ -177,7 +177,7 @@ void AddRoles()
 {
     using var scope = app.Services.CreateScope(); // RoleManager is a scoped service, therefore we need a scope instance to access it
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
+    
     var tAdmin = CreateAdminRole(roleManager);
     tAdmin.Wait();
 
