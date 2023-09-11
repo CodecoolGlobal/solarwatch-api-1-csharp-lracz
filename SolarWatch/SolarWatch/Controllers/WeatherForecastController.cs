@@ -46,7 +46,7 @@ public class WeatherForecastController : ControllerBase
         _sunriseSunsetRepository = sunriseSunsetRepository;
     }
 
-    [HttpGet("GetWeatherForecast"),Authorize(Roles="Admin")]
+    [HttpGet("GetWeatherForecast")]
     public ActionResult<IEnumerable<WeatherForecast>> Get(DateTime date)
     {
         if (date.Year < 2023)

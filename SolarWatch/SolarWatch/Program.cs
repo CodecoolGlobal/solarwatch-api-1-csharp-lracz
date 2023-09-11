@@ -17,6 +17,7 @@ ConfigureSwagger();
 AddIdentity();
 AddDbContext();
 AddAuthentication();
+var movieApiKey = builder.Configuration["Movies:ServiceApiKey"];
 
 var app = builder.Build();
 
@@ -128,8 +129,11 @@ void ConfigureSwagger()
 
 void AddDbContext()
 {
+    var databaseConnection = Environment.GetEnvironmentVariable("MyAppDatabaseConnection");
+    //builder.Services.AddDbContext<WeatherApiContext>(options =>
+      //  options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
     builder.Services.AddDbContext<WeatherApiContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(databaseConnection));
 }
 
 
@@ -173,6 +177,7 @@ void AddIdentity()
         .AddRoles<IdentityRole>() //Enable Identity roles 
         .AddEntityFrameworkStores<UsersContext>();
 }
+AddRoles();
 void AddRoles()
 {
     using var scope = app.Services.CreateScope(); // RoleManager is a scoped service, therefore we need a scope instance to access it

@@ -159,3 +159,9 @@ C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWa
 C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\obj\Debug\net7.0\SolarWatchTest.pdb
 C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\obj\Debug\net7.0\SolarWatchTest.genruntimeconfig.cache
 C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\obj\Debug\net7.0\ref\SolarWatchTest.dll
+C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\raczl\Desktop\advanced\solarwatch-api-1-csharp-lracz\SolarWatch\SolarWatchTest\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll

@@ -11,6 +11,7 @@ using System;
 using System.Reflection;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleToAttribute("SolarWatchTest")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("3b7fd656-f016-4b7a-b860-d2a17973c018")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("SolarWatch")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]

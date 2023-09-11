@@ -33,6 +33,9 @@ namespace WeatherApi.Controllers;
             return Ok(user);
         }
 
+        
+        
+        
         [HttpPost]
         public async Task<IActionResult> CreateUser(IdentityUser user)
         {
